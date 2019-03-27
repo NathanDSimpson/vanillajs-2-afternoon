@@ -58,6 +58,53 @@
 </body>
 
 <script>
+    let mousePosition = {};
+    mousePosition.x = 0;
+    mousePosition.y = 0;
+
+    let drawID
+
+    function getRandomNumber(min, max) {
+        return Math.round(Math.random() * (max - min + 1)) + min;
+    };
+
+    window.addEventListener('mousemove', function(event){
+        mousePosition.x = event.pageX;
+        mousePosition.y = event.pageY;
+    })
+
+    function draw(){
+        return setInterval(function(){
+        const container = document.getElementById('wrap');
+        // PROVIDED BY THE ASSIGNMENT INSTRUCTIONS
+        const color = `background:rgb(${getRandomNumber(0, 255)},${getRandomNumber(0, 255)}, ${getRandomNumber(0, 255)});`;
+        const ballSize = getRandomNumber(10, 30);
+        const size = `height:${ballSize}px; width:${ballSize}px;`;
+        const left = `left:${getRandomNumber(mousePosition.x - ballSize, mousePosition.x)}px;`;
+        const top = `top:${getRandomNumber(mousePosition.y - ballSize,mousePosition.y)}px; `;
+        const style = `${left}${top}${color}${size}`;
+        // END OF PROVIDED CODE
+        const ball = document.createElement('div');
+        ball.setAttribute('class', 'ball');
+        ball.style = style;
+        ball.addEventListener("animationend", function(event){
+            event.target.remove();
+        })
+        container.appendChild(ball)
+    }, 10)};     
+    
+
+
+
+    window.addEventListener("mouseover", function(){
+        drawID = draw()
+    })
+    window.addEventListener("mouseout", function(){
+        clearInterval(drawID)
+    })
+
+
+
 
 </script>
 
